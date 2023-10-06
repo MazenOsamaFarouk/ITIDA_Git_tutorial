@@ -12,13 +12,16 @@ class cCounter
 		{
 			
 		}
-		void incrementCount()
+		//method chain
+		cCounter& incrementCount()
 		{
-			m_counter++;
+			this->m_counter++;
+			return (*this);
 		}
-		void decrementCount()
+		cCounter& decrementCount()
 		{
-			m_counter--;
+			this -> m_counter--;
+			return (*this);
 		}
 		void display()
 		{
@@ -30,6 +33,7 @@ class cCounter
 
 int main(void)
 {
+
 	cCounter count;
 	
 	
