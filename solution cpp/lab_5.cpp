@@ -1,18 +1,19 @@
 #include <iostream>
+#include <stdio.h>
 #include <string>
 using namespace std;
+
 
 int main()
 {
     string str;
-    cout<<"enter some digits"<<endl;
+    cout<<"enter string of digits"<<endl;
     cin>>str;
-    int i;
-    for(i=str.lenght();i>=0;i=i-4)
+    int i,size=str.length();
+    for(i=size-3;i>0;i-=3)
     {
-        str.insert(i,",");
+        str = str.insert(i,",");
     }
-    cout<<"digits after modify"<<endl;
     cout<<str<<endl;
     return 0;
 }
