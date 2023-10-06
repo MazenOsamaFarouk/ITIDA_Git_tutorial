@@ -6,18 +6,8 @@ using namespace std;
 
 long hms_to_secs(int x , int y , int z)
 {
-	while (x != 0)
-	{
-		x--;
-		y += 60 ;
-	}
-
-	while (y != 0)
-	{
-		y --;
-		z += 60 ;
-	}
-
+    z = z + (y*60) + (x*60*60);
+    
 	return z;
 }
 
