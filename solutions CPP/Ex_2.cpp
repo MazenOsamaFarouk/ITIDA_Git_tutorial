@@ -29,6 +29,7 @@ int main ()
     while (c != 'q')
     {
         cout<< "press P to count paying car , press n to count none paying cars press q to quit"<<endl;
+        cin >> c;
         switch (c)
         {
 
@@ -36,12 +37,12 @@ int main ()
         case 'p':
         booth.PayingCar();
         cout<< "a paying car has been counted"<<endl; break;
-        case 'p':
+        case 'n':
         booth.noPayCar();
         cout<< "a none car has been counted"<<endl; break;
         }
     }
-    if (c==q)
+    if (c=='q')
     {
         booth.display();
     }
