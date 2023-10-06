@@ -8,7 +8,7 @@ int main()
     cout<<"enter some digits"<<endl;
     cin>>str;
     int i;
-    for(i=str.lenght();i>=0;i=i+4)
+    for(i=str.lenght();i>=0;i=i-4)
     {
         str.insert(i,",");
     }
