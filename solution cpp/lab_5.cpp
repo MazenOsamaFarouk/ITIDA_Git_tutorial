@@ -8,9 +8,9 @@ int main()
     cout<<"enter some digits"<<endl;
     cin>>str;
     int i;
-    for(i=3;str[i]!='\0';i=i+4)
+    for(i=str.lenght();i>=0;i=i+4)
     {
-        str.insert(i,".");
+        str.insert(i,",");
     }
     cout<<"digits after modify"<<endl;
     cout<<str<<endl;
