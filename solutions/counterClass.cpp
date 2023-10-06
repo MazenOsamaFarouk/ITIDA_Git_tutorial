@@ -5,6 +5,7 @@ class counter
 {
 private:
 int count;
+public:
 counter() : count(0)
 {}
 void increment()
