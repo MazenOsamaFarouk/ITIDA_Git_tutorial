@@ -12,13 +12,15 @@ public:
     {
         /*do nothing*/
     }
-    void increment()
+    c_counter& increment()
     {
         m_counter++;
+        return (*this);
     }
-    void decrement()
+    c_counter& decrement()
     {
         m_counter--;
+        return (*this);
     }
     void display()
     {
@@ -29,11 +31,11 @@ public:
 int main(void)
 {
     c_counter i;
-    i.increment();
+    i.increment().increment().increment();
     i.display();
     i.increment();
     i.display();
-    i.decrement();
+    i.decrement().decrement().decrement().decrement();
     i.display();
 
     return 0;
