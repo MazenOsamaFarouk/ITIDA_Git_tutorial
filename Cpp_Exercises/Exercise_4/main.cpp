@@ -2,32 +2,32 @@
 
 using namespace std;
 
-class counter
+class c_counter
 {
 private:
-    int c_counter;
+    int m_counter;
 public:
-    counter() : c_counter(0)
+    c_counter() : m_counter(0)
     {
         /*do nothing*/
     }
     void increment()
     {
-        c_counter++;
+        m_counter++;
     }
     void decrement()
     {
-        c_counter--;
+        m_counter--;
     }
     void display()
     {
-        cout<<c_counter<<endl;
+        cout<<m_counter<<endl;
     }
 };
 
 int main(void)
 {
-    counter i;
+    c_counter i;
     i.increment();
     i.display();
     i.increment();
