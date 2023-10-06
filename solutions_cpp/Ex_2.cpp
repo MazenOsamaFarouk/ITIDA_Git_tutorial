@@ -38,10 +38,27 @@ class tollbooth
 
 int main()
 {   
+    char key=NULL;
     tollbooth t1;
-    t1.PayingCar();
-    t1.PayingCar();
-    t1.NoPayCar();
+    while(key!='q')
+    {
+        cout<<"please enter car case : ";
+        cin>>key;
+        switch (key)
+        {
+        case 'p':
+            t1.PayingCar();
+            cout<<"car added p"<<endl;
+            break;
+        case 'n':
+            t1.NoPayCar();
+            cout<<"car added n"<<endl;
+            break;
+        default:
+            break;
+        }
+    }
+    
     t1.Display();
     return 0;
 }
