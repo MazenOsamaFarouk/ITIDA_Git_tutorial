@@ -3,53 +3,51 @@
 using namespace std;
 
 
-class tollBooth
+class cTollBooth
 {
 
-unsigned int cars;
-double money;
+unsigned int m_cars;
+double m_money;
 
 public:
-tollBooth()
+	// initializer list
+cTollBooth():
+	m_cars(0) ,
+	m_money(0)
+{ /* noting to do */}
+
+void nopayCar()
 {
-	cars = 0;
-	money =0;
+	m_cars ++;
 }
 
 void payingCar()
 {
-	cars ++;
-	money += 0.50;
+	nopayCar();
+	m_money += 0.50;
 }
 
-void nopayCar()
-{
-	cars ++;
-}
 
 void display()
 {
-	cout << "cars : " <<cars << endl;
-	cout << "money : " << money << endl;
+	cout << "Total cars : " << m_cars << endl;
+	cout << "Total money : " << m_money << endl;
 }
 
 };
 
 
-
-
-
-
 int main(void)
 {
-	tollBooth a;
+	cTollBooth a;
 	char x;
+	bool run = true;
 
-	while (1)
+	while (run)
 	{
 	    cout <<  "Enter a for paying car or b for no paying car or q to display" << endl;
 	    cin >> x;
-		if (x == 'q')
+		/*  if (x == 'q')
 		{
 			a.display();
 			break;
@@ -59,9 +57,24 @@ int main(void)
 			a.payingCar();
 		}
 
-		else if ( x == 'z')
+		else if ( x == 'b')
 		{
 			a.nopayCar();
+		}   */
+
+		switch(x)
+		{
+			case 'a':
+				a.payingCar();
+				break;
+
+			case 'b':
+				a.nopayCar();
+				break;
+
+			case 'q':
+				a.display();
+				run = false;
 		}
 
 	}
