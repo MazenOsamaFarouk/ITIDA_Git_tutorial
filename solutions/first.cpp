@@ -8,23 +8,27 @@ class  tollBooth
 		unsigned int TotalCars_no;
 		double TotalMoney_amount;
 	public:
-		
-		tollBooth()
+		//initializer list
+		tollBooth():
+			TotalCars_no(0),
+			TotalMoney_amount(0)
+			
 		{
-			TotalCars_no = 0;
-			TotalMoney_amount =0 ;
+
 			
 		}
 		
-		void payingCar()
-		{
-			TotalCars_no++;
-			TotalMoney_amount += 0.50;
-		}
 		void nopayCar()
 		{
 			TotalCars_no++;
 		}
+		
+		void payingCar()
+		{
+			nopayCar();
+			TotalMoney_amount += 0.50;
+		}
+		
 		
 		void display()
 		{
@@ -36,14 +40,30 @@ int main (void)
 {
 	tollBooth obj;
 
-	int key, cars_no ;
-	cout << "Please enter number of cars \n";
-	cin >> cars_no;
-	for(int i = 0; i < cars_no; i++)
+	char key = '2';
+	bool flag = true;
+	while(flag)
 	{
 		cout << "Please enter car key enter 1 if paying and 0 if not \n";
 		cin >> key;
-			if(key == 1)
+		switch(key)
+		{
+			case 'p':
+				obj.payingCar();
+				break;
+			case 'n':
+				obj.nopayCar();
+				break;
+			case 'q':
+			flag = false;
+				break;
+			default:
+				cout << "Invalid key \n";
+				break;
+			
+		}
+	}
+			/*if(key == 1)
 		{
 			obj.payingCar(); 
 			
@@ -58,7 +78,7 @@ int main (void)
 			break;
 		}
 		
-	}
+	}*/
 	
 	obj.display();
 	
