@@ -38,7 +38,7 @@ int main()
     char ch;
     cout << "Enter 0 for each non-paying car" << endl;
     cout << "Enter 1 for each paying car" << endl;
-    cout << "Press ESC to exit" << endl;
+    cout << "Press 2 to exit" << endl;
     while(ch != ESC)
     {
         cout<<"Please Enter : "<<endl;
