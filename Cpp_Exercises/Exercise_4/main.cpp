@@ -6,6 +6,7 @@ class c_counter
 {
 private:
     int m_counter;
+
 public:
     c_counter() : m_counter(0)
     {
@@ -21,7 +22,7 @@ public:
     }
     void display()
     {
-        cout<<m_counter<<endl;
+        cout << m_counter << endl;
     }
 };
 
