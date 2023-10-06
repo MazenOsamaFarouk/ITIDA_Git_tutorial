@@ -11,10 +11,9 @@ class tollbooth
         unsigned int totalCars;
         double totalCash;
     public:
-        tollbooth()
+        tollbooth(): totalCars(0),totalCash(0)
         {
-            totalCars = 0;
-            totalCash = 0;
+            /*do nothing*/
         }
         void pay()
         {
