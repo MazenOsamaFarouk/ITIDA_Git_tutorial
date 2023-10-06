@@ -26,7 +26,7 @@ int main ()
 {
     tollbooth booth ; 
     char c ; 
-    while (c != 'q')
+    do 
     {
         cout<< "press P to count paying car , press n to count none paying cars press q to quit"<<endl;
         cin >> c;
@@ -40,11 +40,12 @@ int main ()
         case 'n':
         booth.noPayCar();
         cout<< "a none car has been counted"<<endl; break;
+        case 'q':
+         booth.display();
         }
+
     }
-    if (c=='q')
-    {
-        booth.display();
-    }
+    while (c != 'q');
+    
     return 0 ;
 }
