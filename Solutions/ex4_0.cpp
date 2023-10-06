@@ -4,20 +4,22 @@ using namespace std;
 
 class cCounter
 {
-	signed int m_counts;
+	int m_counts;
 public:
 	cCounter():
 	m_counts(0)
 	{/* nothing to do */}
 
-	void increment()
+	cCounter& increment()
 	{
 		m_counts++;
+		return (*this);
 	}
 
-	void decrement()
+	cCounter& decrement()
 	{
 		m_counts--;
+		return (*this);
 	}
 
 	void display()
@@ -34,11 +36,7 @@ int main(void)
 {
 	cCounter count1;
 
-	count1.increment();
-	count1.increment();
-	count1.decrement();
-	count1.display();
-
+	count1.increment().increment().increment().increment().decrement().display();
 
 	return 0;
 }
