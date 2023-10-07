@@ -117,7 +117,6 @@ public:
     }
 };
 
-
 int main(void)
 {
     std::string user_input;
@@ -127,6 +126,7 @@ int main(void)
 
     while (1)
     {
+
         std::cout << "User Input: ";
         std::cin >> user_input;
         std::transform(user_input.begin(), user_input.end(), user_input.begin(), ::tolower);
