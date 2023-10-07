@@ -131,7 +131,7 @@ int main(void)
         std::cin >> user_input;
         std::transform(user_input.begin(), user_input.end(), user_input.begin(), ::tolower);
 
-        if (user_input == "pc")         {Cairo_tollbooth.PayingVehicles(CAR);}
+        if      (user_input == "pc")    {Cairo_tollbooth.PayingVehicles(CAR);}
         else if (user_input == "pb")    {Cairo_tollbooth.PayingVehicles(BUS);}
         else if (user_input == "pt")    {Cairo_tollbooth.PayingVehicles(TRUCK);}
         else if (user_input == "po")    {Cairo_tollbooth.PayingVehicles(OTHER);}
