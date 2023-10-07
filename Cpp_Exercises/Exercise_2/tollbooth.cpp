@@ -25,12 +25,10 @@ private:
     double m_MoneyCollected;
 
 public:
-    /*
-    constructor with initializer list
+    /*constructor with initializer list
     constructor is a method with the exact same name as the class 
     that get called when creating an object from a class
-    takes nothing "void" is not allowed also and initializes variables
-    */
+    takes nothing "void" is not allowed also and initializes variables*/
     c_tollbooth() : m_error(false),
                     m_Paying_Vehicles(0),
                     m_Non_Paying_Vehicles(0),
@@ -103,8 +101,11 @@ public:
         std::cout << "Number of Cars: " << m_Number_of_Cars << "." << std::endl;
         std::cout << "Number of Busses: " << m_Number_of_Busses << "." << std::endl;
         std::cout << "Number of Trucks: " << m_Number_of_Trucks << "." << std::endl;
+        std::cout << "Number of Others: " << m_Number_of_Others << "." << std::endl;
+        std::cout << "------------------------------------" << std::endl;
         std::cout << "Number of Paying Vehicles: " << m_Paying_Vehicles << "." << std::endl;
         std::cout << "Number of Non Paying Vehicles: " << m_Non_Paying_Vehicles << "." << std::endl;
+        std::cout << "------------------------------------" << std::endl;
         std::cout << "Total Number of Vehicles: " << m_Paying_Vehicles + m_Non_Paying_Vehicles << "." << std::endl;
         std::cout << "Total Cash Collected: " << m_MoneyCollected << " EGP." << std::endl;
         std::cout << "****************END.****************" << std::endl << std::endl;
@@ -121,7 +122,6 @@ int main(void)
 {
     std::string user_input;
     c_tollbooth Cairo_tollbooth;
-
     Cairo_tollbooth.DisplayHelpList();
 
     while (1)
