@@ -56,6 +56,44 @@ public:
         return c_time(m_total_seconds - other_time.m_total_seconds);
     }
 
+    c_time operator+(const c_time &other_time) const
+    {
+        return Add(other_time);
+    }
+
+    c_time operator-(const c_time &other_time) const
+    {
+        return Subtract(other_time);
+    }
+
+    c_time operator++(void)
+    {
+        ++m_total_seconds;
+        FormatAndSave(m_total_seconds);
+        return (*this);
+    }
+
+    c_time operator++(int)
+    {
+        m_total_seconds++;
+        FormatAndSave(m_total_seconds);
+        return (*this);
+    }
+
+    c_time operator--(void)
+    {
+        --m_total_seconds;
+        FormatAndSave(m_total_seconds);
+        return (*this);
+    }
+
+    c_time operator--(int)
+    {
+        m_total_seconds--;
+        FormatAndSave(m_total_seconds);
+        return (*this);
+    }
+
     void print(void) const
     {
         if (m_days)
@@ -72,19 +110,11 @@ public:
 
 int main(void)
 {
-    const c_time time_1(600, 300, 200);
-    const c_time time_2(400, 700, 800);
-    const c_time time_3(86400);
-    c_time time_subtract;
-    c_time time_sum;
-
-
-    time_sum = time_1.Add(time_2).Add(time_3);
-    time_subtract = time_1.Subtract(time_2).Subtract(time_3);
-
-
-    time_sum.print();
-    time_subtract.print();
-
+    c_time counter(SECONDS_IN_A_DAY - 2);
+    counter.print();
+    (counter++).print();
+    (++counter).print();
+    (counter--).print();
+    (--counter).print();
     return 0;
 }

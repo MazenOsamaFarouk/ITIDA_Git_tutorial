@@ -13,6 +13,18 @@ private:
     int m_seconds;
     int m_total_seconds;
 
+    void FormatAndSave(int temp_total_seconds)
+    {
+        m_total_seconds = temp_total_seconds;
+        m_days = temp_total_seconds / SECONDS_IN_A_DAY;
+        temp_total_seconds = temp_total_seconds % SECONDS_IN_A_DAY;
+        m_hours = temp_total_seconds / Seconds_IN_HOUR;
+        temp_total_seconds = temp_total_seconds % Seconds_IN_HOUR;
+        m_minutes = temp_total_seconds / SECONDS_IN_MINUTE;
+        temp_total_seconds = temp_total_seconds % SECONDS_IN_MINUTE;
+        m_seconds = temp_total_seconds;
+    }
+
 public:
     c_time() : m_days(0),
                m_hours(0),
@@ -32,18 +44,6 @@ public:
     {
         int temp_total_seconds = (hours * Seconds_IN_HOUR) + (minutes * SECONDS_IN_MINUTE) + (seconds);
         FormatAndSave(temp_total_seconds);
-    }
-
-    void FormatAndSave(int temp_total_seconds)
-    {
-        m_total_seconds = temp_total_seconds;
-        m_days = temp_total_seconds / SECONDS_IN_A_DAY;
-        temp_total_seconds = temp_total_seconds % SECONDS_IN_A_DAY;
-        m_hours = temp_total_seconds / Seconds_IN_HOUR;
-        temp_total_seconds = temp_total_seconds % Seconds_IN_HOUR;
-        m_minutes = temp_total_seconds / SECONDS_IN_MINUTE;
-        temp_total_seconds = temp_total_seconds % SECONDS_IN_MINUTE;
-        m_seconds = temp_total_seconds;
     }
 
     c_time Add(const c_time &other_time) const
@@ -66,7 +66,7 @@ public:
         return Subtract(other_time);
     }
 
-    void Display(void) const
+    void print(void) const
     {
         if (m_days)
         {
@@ -93,8 +93,8 @@ int main(void)
     time_sum = time_1 + time_2 + time_3;
     time_subtract = time_1 - time_2 - time_3;
 
-    time_sum.Display();
-    time_subtract.Display();
+    time_sum.print();
+    time_subtract.print();
 
     return 0;
 }
