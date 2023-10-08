@@ -21,7 +21,7 @@ class tollbooth
 	{
 		totalcars++;
 	}
-	void display()
+	void display() const
 	{
 		cout<<"totalcars are:"<<totalcars<<endl;
 		cout<<"totalmoney are:"<<totalmoney<<endl;
