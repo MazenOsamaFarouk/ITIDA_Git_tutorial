@@ -1,90 +1,135 @@
 #include <iostream>
 
 #define SECONDS_IN_A_DAY 86400
+#define SECONDS_IN_HALF_DAY 43200
 #define Seconds_IN_HOUR 3600
 #define SECONDS_IN_MINUTE 60
 
 class c_time
 {
 private:
-    int m_days;
-    int m_hours;
-    int m_minutes;
-    int m_seconds;
-    int m_total_seconds;
+    bool reset;
+    int m_TimeInSeconds;
+    unsigned short int m_hours;
+    unsigned short int m_minutes;
+    unsigned short int m_seconds;
 
-    void FormatAndSave(int temp_total_seconds)
+    bool FormatAndSave(int Copy_TimeInSeconds)
     {
-        m_total_seconds = temp_total_seconds;
-        m_days = temp_total_seconds / SECONDS_IN_A_DAY;
-        temp_total_seconds = temp_total_seconds % SECONDS_IN_A_DAY;
-        m_hours = temp_total_seconds / Seconds_IN_HOUR;
-        temp_total_seconds = temp_total_seconds % Seconds_IN_HOUR;
-        m_minutes = temp_total_seconds / SECONDS_IN_MINUTE;
-        temp_total_seconds = temp_total_seconds % SECONDS_IN_MINUTE;
-        m_seconds = temp_total_seconds;
+        if (Copy_TimeInSeconds > 0 && Copy_TimeInSeconds < SECONDS_IN_A_DAY)
+        {
+            m_TimeInSeconds = Copy_TimeInSeconds;
+            m_hours = Copy_TimeInSeconds / Seconds_IN_HOUR;
+            Copy_TimeInSeconds = Copy_TimeInSeconds % Seconds_IN_HOUR;
+            m_minutes = Copy_TimeInSeconds / SECONDS_IN_MINUTE;
+            Copy_TimeInSeconds = Copy_TimeInSeconds % SECONDS_IN_MINUTE;
+            m_seconds = Copy_TimeInSeconds;
+            reset = false;
+        }
+        else /*cases: 1-Got a wrong input resetting to 0:0:0. 2-While passing time reached 23:59:59,so next count will reset to 0:0:0*/
+        {
+            m_hours = 0;
+            m_minutes = 0;
+            m_seconds = 0;
+            m_TimeInSeconds = 0;
+            reset = true;
+        }
+        return reset;
     }
 
 public:
-    c_time() : m_days(0),
+    c_time() : reset(false),
                m_hours(0),
                m_minutes(0),
                m_seconds(0),
-               m_total_seconds(0)
+               m_TimeInSeconds(0)
     {
         /*do nothing*/
     }
 
-    c_time(int temp_total_seconds)
+    bool Set_Time_Seconds(int Copy_TimeInSeconds)
     {
-        FormatAndSave(temp_total_seconds);
+        return FormatAndSave(Copy_TimeInSeconds);
     }
 
-    c_time(int hours, int minutes, int seconds)
+    bool Set_Time(int Copy_Hours, int Copy_Minutes, int Copy_Seconds)
     {
-        int temp_total_seconds = (hours * Seconds_IN_HOUR) + (minutes * SECONDS_IN_MINUTE) + (seconds);
-        FormatAndSave(temp_total_seconds);
+        return FormatAndSave(((Copy_Hours * Seconds_IN_HOUR) + (Copy_Minutes * SECONDS_IN_MINUTE) + (Copy_Seconds)));
     }
 
-    c_time Add(const c_time &other_time) const
+    c_time Add(c_time const &other_time) const
     {
-        return c_time(m_total_seconds + other_time.m_total_seconds);
+        c_time Add_temp;
+        Add_temp.Set_Time_Seconds((m_TimeInSeconds + other_time.m_TimeInSeconds));
+        return Add_temp;
     }
 
-    c_time Subtract(const c_time &other_time) const
+    c_time Subtract(c_time const &other_time) const
     {
-        return c_time(m_total_seconds - other_time.m_total_seconds);
+        c_time Subtract_temp;
+        Subtract_temp.Set_Time_Seconds((m_TimeInSeconds - other_time.m_TimeInSeconds));
+        return Subtract_temp;
+    }
+
+    bool Reset_Check(void) const
+    {
+        return reset;
+    }
+
+    void Reset_Time(void)
+    {
+        Set_Time_Seconds(0);
     }
 
     void print(void) const
     {
-        if (m_days)
+        std::cout << m_hours << ":" << m_minutes << ":" << m_seconds << std::endl;
+    }
+
+    void print_am_pm(void) const
+    {
+        int temp_hours = 0;
+        if (m_TimeInSeconds >= SECONDS_IN_HALF_DAY)
         {
-            std::cout << m_days << " Days." << std::endl;
-            std::cout << m_hours << ":" << m_minutes << ":" << m_seconds << std::endl;
+            if (m_hours > 12)
+            {
+                temp_hours = m_hours - 12;
+                std::cout << temp_hours << ":" << m_minutes << ":" << m_seconds << " PM" << std::endl;
+            }
+            else
+            {
+                std::cout << m_hours << ":" << m_minutes << ":" << m_seconds << " PM" << std::endl;
+            }
         }
         else
         {
-            std::cout << m_hours << ":" << m_minutes << ":" << m_seconds << std::endl;
+            if (m_hours == 0)
+            {
+                temp_hours = 12;
+                std::cout << temp_hours << ":" << m_minutes << ":" << m_seconds << " AM" << std::endl;
+            }
+            else
+            {
+                std::cout << m_hours << ":" << m_minutes << ":" << m_seconds << " AM" << std::endl;
+            }
         }
     }
 };
 
 int main(void)
 {
-    const c_time time_1(600, 300, 200);
-    const c_time time_2(400, 700, 800);
-    const c_time time_3(86400);
-    c_time time_subtract;
-    c_time time_sum;
+    c_time time_1, time_2, time_3, add_result, subtract_result;
 
+    time_1.Set_Time(12, 30, 40);
+    time_2.Set_Time(3, 4, 25);
+    time_3.Set_Time_Seconds(3600);
 
-    time_sum = time_1.Add(time_2).Add(time_3);
-    time_subtract = time_1.Subtract(time_2).Subtract(time_3);
+    add_result = time_1.Add(time_2).Add(time_3);
+    subtract_result = time_1.Subtract(time_2).Subtract(time_3);
 
-
-    time_sum.print();
-    time_subtract.print();
-
+    add_result.print();
+    subtract_result.print();
+    add_result.print_am_pm();
+    subtract_result.print_am_pm();
     return 0;
 }
