@@ -64,7 +64,7 @@ public:
     c_time operator++(int)
     {
         m_TimeInSeconds++;
-        Set_Time_Seconds(m_TimeInSeconds);
+        FormatAndSave(m_TimeInSeconds);
         return (*this);
     }
 
@@ -192,6 +192,7 @@ void Thread_1_ReadUserInput(void)
     while (user_input != 'e')
     {
         bool reset = false;
+
         mtx.lock();
         system("cls");
         CursorPositionWindows(0, 1);
@@ -232,32 +233,28 @@ void Thread_2_DisplayClock(void)
 {
     while (user_input != 'e')
     {
+        mtx.lock();
         if (user_input == 'a')
         {
-            mtx.lock();
             CursorPositionWindows(12, 0);
             Clock.print_am_pm();
             CursorPositionWindows(12, 11);
-            mtx.unlock();
         }
         else if (user_input == 't')
         {
-            mtx.lock();
             CursorPositionWindows(12, 0);
             Clock.print();
             CursorPositionWindows(12, 11);
-            mtx.unlock();
         }
         else
         {
             /*default display am/pm time*/
-            mtx.lock();
             CursorPositionWindows(12, 0);
             Clock.print_am_pm();
             CursorPositionWindows(12, 11);
-            mtx.unlock();
         }
         Clock++;
+        mtx.unlock();
         Sleep(1000);
     }
 }
@@ -276,14 +273,16 @@ int Get_Time(void)
         std::cout << "Please enter the minute: " << std::endl;
         std::cin >> minute;
     } while (std::cin.fail());
+
     system("cls");
 
-    return ((hour * 60 * 60) + (minute * 60));
+    return ((hour * Seconds_IN_HOUR) + (minute * SECONDS_IN_MINUTE));
 }
 
 void CursorPositionWindows(short int x, short int y)
 {
     HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
+
     COORD position = {x, y};
 
     SetConsoleCursorPosition(hStdout, position);
@@ -292,6 +291,7 @@ void CursorPositionWindows(short int x, short int y)
 void ShowConsoleCursor(bool showFlag)
 {
     HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+
     CONSOLE_CURSOR_INFO cursorInfo;
 
     GetConsoleCursorInfo(out, &cursorInfo);
