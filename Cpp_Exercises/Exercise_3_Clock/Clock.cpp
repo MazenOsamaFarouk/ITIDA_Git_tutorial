@@ -167,7 +167,7 @@ void ShowConsoleCursor(bool showFlag);
 
 int Get_Time(void);
 
-char user_input = 0;
+char user_input(0);
 c_time Clock;
 
 int main(void)
@@ -253,7 +253,7 @@ void Thread_2_DisplayClock(void)
             Clock.print_am_pm();
             CursorPositionWindows(12, 11);
         }
-        Clock++;
+        ++Clock;
         mtx.unlock();
         Sleep(1000);
     }
@@ -282,7 +282,7 @@ int Get_Time(void)
 void CursorPositionWindows(short int x, short int y)
 {
     HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
-
+    
     COORD position = {x, y};
 
     SetConsoleCursorPosition(hStdout, position);
