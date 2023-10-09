@@ -224,6 +224,7 @@ void Thread_1_ReadUserInput(void)
             Clock.Reset_Time();
             break;
         };
+        Sleep(150);
     }
 }
 
@@ -291,7 +292,6 @@ void CursorPositionWindows(short int x, short int y)
 void ShowConsoleCursor(bool showFlag)
 {
     HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
-
     CONSOLE_CURSOR_INFO cursorInfo;
 
     GetConsoleCursorInfo(out, &cursorInfo);
