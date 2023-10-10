@@ -3,17 +3,27 @@
 #include <windows.h>
 #include <thread>
 #include <mutex>
+#include <atomic>
 
 #define SECONDS_IN_A_DAY 86400
 #define SECONDS_IN_HALF_DAY 43200
 #define Seconds_IN_HOUR 3600
 #define SECONDS_IN_MINUTE 60
 
+enum Menu_Choices
+{
+    Set = 's',
+    Reset = 'r',
+    Am_Pm = '1',
+    TwentyFour = '2',
+    Exit = 'e'
+};
+
 class c_time
 {
 private:
     bool reset;
-    int m_TimeInSeconds;
+    int  m_TimeInSeconds;
     unsigned short int m_hours;
     unsigned short int m_minutes;
     unsigned short int m_seconds;
@@ -61,7 +71,7 @@ public:
         return FormatAndSave(((Copy_Hours * Seconds_IN_HOUR) + (Copy_Minutes * SECONDS_IN_MINUTE) + (Copy_Seconds)));
     }
 
-    c_time operator++(int)
+    c_time operator++(int)  
     {
         m_TimeInSeconds++;
         FormatAndSave(m_TimeInSeconds);
@@ -87,25 +97,23 @@ public:
 
     void DisplayHelpList(void) const
     {
-        std::cout << std::endl
-                  << "  Welcome to Clock Program v0.0.1." << std::endl;
-        std::cout << "|---------------Help---------------|" << std::endl;
-        std::cout << "|Press \"s\" To Set Time.            |" << std::endl;
-        std::cout << "|Input \"a\" Display Clock AM/PM.    |" << std::endl;
-        std::cout << "|Input \"t\" Display Clock 24 hour.  |" << std::endl;
-        std::cout << "|Input \"r\" To reset Clock.         |" << std::endl;
-        std::cout << "|Press \"e\" to exit.                |" << std::endl;
-        std::cout << "*---------------End.---------------*" << std::endl
-                  << std::endl;
+        std::cout << "  Welcome to Clock Program v0.0.1."       << "\n"
+                  << "|---------------Help---------------|"     << "\n"
+                  << "|Press \"s\" To Set Time.            |"   << "\n"
+                  << "|Press \"r\" To Reset Clock.         |"   << "\n"
+                  << "|Press \"1\" For Am/Pm Format.       |"   << "\n"
+                  << "|Press \"2\" For 24 Hour Format.     |"   << "\n"
+                  << "|Press \"e\" To Exit.                |"   << "\n"
+                  << "*---------------End.---------------*"     << std::endl;
     }
 
     void print(void) const
     {
-        std::cout << std::setw(2) << std::setfill('0') << m_hours;
-        std::cout << ":";
-        std::cout << std::setw(2) << std::setfill('0') << m_minutes;
-        std::cout << ":";
-        std::cout << std::setw(2) << std::setfill('0') << m_seconds;
+        std::cout << std::setw(2) << std::setfill('0') << m_hours
+                  << ":"
+                  << std::setw(2) << std::setfill('0') << m_minutes
+                  << ":"
+                  << std::setw(2) << std::setfill('0') << m_seconds;
     }
 
     void print_am_pm(void) const
@@ -116,21 +124,21 @@ public:
             if (m_hours > 12)
             {
                 temp_hours = m_hours - 12;
-                std::cout << std::setw(2) << std::setfill('0') << temp_hours;
-                std::cout << ":";
-                std::cout << std::setw(2) << std::setfill('0') << m_minutes;
-                std::cout << ":";
-                std::cout << std::setw(2) << std::setfill('0') << m_seconds;
-                std::cout << " PM";
+                std::cout << std::setw(2) << std::setfill('0') << temp_hours
+                          << ":"
+                          << std::setw(2) << std::setfill('0') << m_minutes
+                          << ":"
+                          << std::setw(2) << std::setfill('0') << m_seconds
+                          << " PM";
             }
             else
             {
-                std::cout << std::setw(2) << std::setfill('0') << m_hours;
-                std::cout << ":";
-                std::cout << std::setw(2) << std::setfill('0') << m_minutes;
-                std::cout << ":";
-                std::cout << std::setw(2) << std::setfill('0') << m_seconds;
-                std::cout << " PM";
+                std::cout << std::setw(2) << std::setfill('0') << m_hours
+                          << ":"
+                          << std::setw(2) << std::setfill('0') << m_minutes
+                          << ":"
+                          << std::setw(2) << std::setfill('0') << m_seconds
+                          << " PM";
             }
         }
         else
@@ -138,48 +146,53 @@ public:
             if (m_hours == 0)
             {
                 temp_hours = 12;
-                std::cout << std::setw(2) << std::setfill('0') << temp_hours;
-                std::cout << ":";
-                std::cout << std::setw(2) << std::setfill('0') << m_minutes;
-                std::cout << ":";
-                std::cout << std::setw(2) << std::setfill('0') << m_seconds;
-                std::cout << " AM";
+                std::cout << std::setw(2) << std::setfill('0') << temp_hours
+                          << ":"
+                          << std::setw(2) << std::setfill('0') << m_minutes
+                          << ":"
+                          << std::setw(2) << std::setfill('0') << m_seconds
+                          << " AM";
             }
             else
             {
-                std::cout << std::setw(2) << std::setfill('0') << m_hours;
-                std::cout << ":";
-                std::cout << std::setw(2) << std::setfill('0') << m_minutes;
-                std::cout << ":";
-                std::cout << std::setw(2) << std::setfill('0') << m_seconds;
-                std::cout << " AM";
+                std::cout << std::setw(2) << std::setfill('0') << m_hours
+                          << ":"
+                          << std::setw(2) << std::setfill('0') << m_minutes
+                          << ":"
+                          << std::setw(2) << std::setfill('0') << m_seconds
+                          << " AM";
             }
         }
     }
 };
 
-std::mutex mtx;
 void Thread_1_ReadUserInput(void);
 void Thread_2_DisplayClock(void);
+void Thread_3_IncrementClock(void);
 
-void CursorPositionWindows(short int x, short int y);
+void Display_Menu(void);
+int Get_Time(bool reset);
+
 void ShowConsoleCursor(bool showFlag);
+void CursorPositionWindows(short int x, short int y);
 
-int Get_Time(void);
-
-char user_input(0);
 c_time Clock;
+std::mutex Console_mutex;
+std::atomic<bool> Am_Pm_Format(true); /*set default format from here true for am/pm false for 24 hour format*/
+char user_input(0);
 
 int main(void)
 {
     ShowConsoleCursor(false);
-    system("cls");
+    Display_Menu();
 
     std::thread Input(Thread_1_ReadUserInput);
     std::thread Display(Thread_2_DisplayClock);
+    std::thread Increment(Thread_3_IncrementClock);
 
     Input.join();
     Display.join();
+    Increment.join();
 
     system("cls");
     std::cout << "Bye." << std::endl;
@@ -187,114 +200,131 @@ int main(void)
     return 0;
 }
 
+void Display_Menu(void)
+{
+    system("cls");
+    CursorPositionWindows(0, 1);
+    Clock.DisplayHelpList();
+    std::cout << "User Input: ";
+}
+
 void Thread_1_ReadUserInput(void)
 {
-    while (user_input != 'e')
+    while (true)
     {
-        bool reset = false;
-
-        mtx.lock();
-        system("cls");
-        CursorPositionWindows(0, 1);
-        Clock.DisplayHelpList();
-        std::cout << "User Input: ";
-        mtx.unlock();
-
         std::cin >> user_input;
-        if (std::cin.fail())
-        {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        }
-        else
-        {
-            std::tolower(user_input);
-        }
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::tolower(user_input);
 
         switch (user_input)
         {
-        case 's':
-            mtx.lock();
+        case Set:
+        {
+            bool reset = false;
+            Console_mutex.lock();
             do
             {
-                reset = Clock.Set_Time_Seconds(Get_Time());
+                reset = Clock.Set_Time_Seconds(Get_Time(reset));
             } while (reset);
-            mtx.unlock();
-            break;
-        case 'r':
+            Console_mutex.unlock();
+        }
+        break;
+        case Reset:
             Clock.Reset_Time();
             break;
+        case Am_Pm:
+            Am_Pm_Format = true;
+            break;
+        case TwentyFour:
+            Am_Pm_Format = false;
+            break;
+        case Exit:
+            return;
+            break;
+        default:    /*do nothing*/
+            break;
         };
-        Sleep(150);
+        Console_mutex.lock();
+        Display_Menu();
+        Console_mutex.unlock();
+        Sleep(150); /*just for fun*/
     }
 }
 
 void Thread_2_DisplayClock(void)
 {
-    while (user_input != 'e')
+    while (user_input != Exit)
     {
-        mtx.lock();
-        if (user_input == 'a')
+        Console_mutex.lock();
+        CursorPositionWindows(12, 0);
+        if (Am_Pm_Format)
         {
-            CursorPositionWindows(12, 0);
             Clock.print_am_pm();
-            CursorPositionWindows(12, 11);
-        }
-        else if (user_input == 't')
-        {
-            CursorPositionWindows(12, 0);
-            Clock.print();
-            CursorPositionWindows(12, 11);
         }
         else
         {
-            /*default display am/pm time*/
-            CursorPositionWindows(12, 0);
-            Clock.print_am_pm();
-            CursorPositionWindows(12, 11);
+            Clock.print();
         }
-        ++Clock;
-        mtx.unlock();
-        Sleep(1000);
+        CursorPositionWindows(0, 10);
+        Console_mutex.unlock();
+        Sleep(1001);
     }
 }
 
-int Get_Time(void)
+void Thread_3_IncrementClock(void)
+{
+    while(user_input != Exit)
+    {
+        ++Clock;     /*increment 1 second*/
+        Sleep(1000); /*wait 1 second*/
+    }
+}
+
+int Get_Time(bool reset)
 {
     int hour = 0, minute = 0;
-
-    do
+    char buffer = 0;
+    if (!reset)
     {
         system("cls");
-        std::cin.clear();                                                   /*clear failed status of cin*/
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); /*ignore all of the user input*/
-        std::cout << "Please enter the hour in 24 hour format: " << std::endl;
-        std::cin >> hour;
-        std::cout << "Please enter the minute: " << std::endl;
-        std::cin >> minute;
-    } while (std::cin.fail());
+    }
+    else
+    {
+        std::cout << '\n'
+                  << "If its \'Pm\' and not 12 Pm."                 << '\n'
+                  << "just \"add 12 to your current time\"."        << '\n'
+                  << "Time Can't exceed 24 hour Please Try Again. " << '\n'
+                  << std::endl;
+    }
 
-    system("cls");
+    std::cout << "Please enter the current time in 24-hour format." << '\n'
+              << "Please enter the Hour \"HH\" (0 to 23): ";
+    std::cin >> hour;
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cout << "Please enter the Minute \"MM\" (0 to 59): ";
+    std::cin >> minute;
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     return ((hour * Seconds_IN_HOUR) + (minute * SECONDS_IN_MINUTE));
+}
+
+void ShowConsoleCursor(bool showFlag)
+{
+    HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_CURSOR_INFO CursorInfo;
+
+    GetConsoleCursorInfo(hStdout, &CursorInfo);
+    CursorInfo.bVisible = showFlag; // set the cursor visibility
+    SetConsoleCursorInfo(hStdout, &CursorInfo);
 }
 
 void CursorPositionWindows(short int x, short int y)
 {
     HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
-    
-    COORD position = {x, y};
+    COORD Cursor_Position = {x, y}; // change x y position
 
-    SetConsoleCursorPosition(hStdout, position);
-}
-
-void ShowConsoleCursor(bool showFlag)
-{
-    HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
-
-    CONSOLE_CURSOR_INFO cursorInfo;
-
-    GetConsoleCursorInfo(out, &cursorInfo);
-    cursorInfo.bVisible = showFlag; // set the cursor visibility
-    SetConsoleCursorInfo(out, &cursorInfo);
+    SetConsoleCursorPosition(hStdout, Cursor_Position);
 }
