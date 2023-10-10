@@ -2,7 +2,7 @@
 using namespace std;
 
 
-const double toll = 0.5;
+const float toll = 0.5;
 
 class tollBooth
 {
@@ -35,7 +35,22 @@ void display() const
 
 int main()
 {
+tollBooth booth1;  
 
-tollBooth booth1;           
+char c;
+while(c !='q')
+{
+    cout << "Enter character: ";
+    cin  >> c;  
+switch(c)
+{
+    case 'p' : booth1.payingCar()    ;break;
+    case 'n' : booth1.nopayCar ()    ;break;
+    case 'q' :                        break;
+    default  : cout << "Wrong choice";break; 
+}
+}
+
+booth1.display();
 
 }
