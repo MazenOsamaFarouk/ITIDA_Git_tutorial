@@ -75,9 +75,10 @@ public:
 
     c_time operator++(int)
     {
+        c_time temp = *this;
         m_total_seconds++;
         FormatAndSave(m_total_seconds);
-        return (*this);
+        return temp;
     }
 
     c_time operator--(void)
@@ -89,9 +90,10 @@ public:
 
     c_time operator--(int)
     {
+        c_time temp = *this;
         m_total_seconds--;
         FormatAndSave(m_total_seconds);
-        return (*this);
+        return temp;
     }
 
     void print(void) const

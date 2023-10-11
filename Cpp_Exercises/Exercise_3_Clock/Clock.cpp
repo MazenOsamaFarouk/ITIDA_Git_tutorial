@@ -71,11 +71,12 @@ public:
         return FormatAndSave(((Copy_Hours * Seconds_IN_HOUR) + (Copy_Minutes * SECONDS_IN_MINUTE) + (Copy_Seconds)));
     }
 
-    c_time operator++(int)  
+    c_time operator++(int)
     {
+        c_time temp = *this;
         m_TimeInSeconds++;
         FormatAndSave(m_TimeInSeconds);
-        return (*this);
+        return temp;
     }
 
     c_time operator++(void)
