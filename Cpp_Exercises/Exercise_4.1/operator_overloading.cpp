@@ -85,16 +85,16 @@ int main(void)
 
     std::cout << std::endl;
 
-    j = ++i; /*pre increment*/
-    j.display();
-    i.display();
+    j = ++i; /*pre increment*/ //j=2 //i=2
+    j.display();    //2
+    i.display();    //2
 
     std::cout << std::endl;
 
-    i=i+5;
+    i=i+5;      //2+5 =7
     i.display();
 
-    j=j-5;
+    j=j-5;      //2-5=7
     j.display();
     
     return 0;
