@@ -1,8 +1,6 @@
 #include <iostream>
 #include <string>
 
-#define MAX_WORDS 100
-#define MAX_WORD_LENGTH 50
 
 int main()
 {
