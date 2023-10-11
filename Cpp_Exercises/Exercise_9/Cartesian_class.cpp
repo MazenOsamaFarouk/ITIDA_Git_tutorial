@@ -1,41 +1,47 @@
 #include <iostream>
 
-class Cartesian
+class cCartesian
 {
 private:
-    double x;
-    double y;
+    double m_x;
+    double m_y;
 
 public:
-    Cartesian(double x = 0, double y = 0) : x(x),
-                                            y(y)
+    cCartesian(double x = 0, double y = 0) : m_x(m_x),
+                                            m_y(m_y)
     {
         /*do nothing*/
     }
 
     double getX() const
     {
-        return x;
+        return m_x;
     }
 
     double get_Y() const
     {
-        return y;
+        return m_y;
     }
 
     void set_X(double number)
     {
-        x = number;
+        m_x = number;
     }
 
     void set_Y(double number)
     {
-        y = number;
+        m_y = number;
     }
 
     void set_X_Y(double _x,double _y)
     {
-        x=_x;
-        y=_y;
+        m_x=_x;
+        m_y=_y;
     }
 };
+
+int main(void)
+{
+
+    return 0;
+}
