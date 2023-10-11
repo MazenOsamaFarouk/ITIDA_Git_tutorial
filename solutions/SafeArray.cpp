@@ -22,7 +22,7 @@ int main()
 {
     safearay s1;
 for(int i=0; i<LIM; i++)  
-s1[i] = i*10;           
+s1[i] = i;           
 for(int i=0; i<LIM; i++)      
 {
 int temp = s1[i];       
