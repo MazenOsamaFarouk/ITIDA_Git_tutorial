@@ -6,7 +6,7 @@ class Cartesian
 private:
 int x_Direction;
 int y_Direction;
-Cartesian(): x(0) , y(0){}
+Cartesian(): x_Direction(0) , y_Direction(0){}
 
 void Set_x_y(int m_x_Direction, int m_y_Direction)
 {
