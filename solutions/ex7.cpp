@@ -12,13 +12,7 @@ int main()
     while (start < str_input.size())
     {
         start = str_input.find_first_not_of(" ,.?!;:");
-        if (start == string::npos) {
-            break;
-        }
         last = str_input.find_first_of(" ,.?!;:", start);
-        if (last == string::npos) {
-            last = str_input.size();
-        }
         sub = str_input.substr(start,last-start);
         cout<<sub<<endl;
         str_input.erase(start,last);
