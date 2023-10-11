@@ -7,7 +7,7 @@ int main()
     int i=0,j;
     string sub;
     string str;
-    string str2=" $";
+    string str2=" .,?!:;";
     getline(cin,str);
     while(str2[i]!='\0')
     {
