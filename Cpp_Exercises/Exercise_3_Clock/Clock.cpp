@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <windows.h>
+#include <conio.h>
 #include <thread>
 #include <mutex>
 #include <atomic>
@@ -23,7 +24,7 @@ class c_time
 {
 private:
     bool reset;
-    int  m_TimeInSeconds;
+    int m_TimeInSeconds;
     unsigned short int m_hours;
     unsigned short int m_minutes;
     unsigned short int m_seconds;
@@ -213,43 +214,45 @@ void Thread_1_ReadUserInput(void)
 {
     while (true)
     {
-        std::cin >> user_input;
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::tolower(user_input);
-
-        switch (user_input)
+        if (_kbhit())
         {
-        case Set:
-        {
-            bool reset = false;
             Console_mutex.lock();
-            do
+            std::cin >> user_input;
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::tolower(user_input);
+
+            switch (user_input)
             {
-                reset = Clock.Set_Time_Seconds(Get_Time(reset));
-            } while (reset);
+            case Set:
+            {
+                bool reset = false;
+                do
+                {
+                    reset = Clock.Set_Time_Seconds(Get_Time(reset));
+                } while (reset);
+            }
+            break;
+            case Reset:
+                Clock.Reset_Time();
+                break;
+            case Am_Pm:
+                Am_Pm_Format = true;
+                break;
+            case TwentyFour:
+                Am_Pm_Format = false;
+                break;
+            case Exit:
+                Console_mutex.unlock();
+                return;
+                break;
+            default: /*do nothing*/
+                break;
+            };
+            Display_Menu();
             Console_mutex.unlock();
         }
-        break;
-        case Reset:
-            Clock.Reset_Time();
-            break;
-        case Am_Pm:
-            Am_Pm_Format = true;
-            break;
-        case TwentyFour:
-            Am_Pm_Format = false;
-            break;
-        case Exit:
-            return;
-            break;
-        default:    /*do nothing*/
-            break;
-        };
-        Console_mutex.lock();
-        Display_Menu();
-        Console_mutex.unlock();
-        Sleep(150); /*just for fun*/
+        Sleep(50);
     }
 }
 
@@ -269,13 +272,13 @@ void Thread_2_DisplayClock(void)
         }
         CursorPositionWindows(0, 10);
         Console_mutex.unlock();
-        Sleep(1001);
+        Sleep(50);
     }
 }
 
 void Thread_3_IncrementClock(void)
 {
-    while(user_input != Exit)
+    while (user_input != Exit)
     {
         ++Clock;     /*increment 1 second*/
         Sleep(1000); /*wait 1 second*/
@@ -286,6 +289,7 @@ int Get_Time(bool reset)
 {
     int hour = 0, minute = 0;
     char buffer = 0;
+    
     if (!reset)
     {
         system("cls");
@@ -293,8 +297,8 @@ int Get_Time(bool reset)
     else
     {
         std::cout << '\n'
-                  << "If its \'Pm\' and not 12 Pm."                 << '\n'
-                  << "just \"add 12 to your current time\"."        << '\n'
+                  << "If its \'Pm\' and not 12 Pm." << '\n'
+                  << "just \"add 12 to your current time\"." << '\n'
                   << "Time Can't exceed 24 hour Please Try Again. " << '\n'
                   << std::endl;
     }
