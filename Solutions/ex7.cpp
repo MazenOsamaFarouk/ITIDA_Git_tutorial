@@ -27,13 +27,20 @@ int main()
 			}
 	}
 
-	//	cout << "\nres : \n" << res << endl;
+	 cout << "\nres : \n" << res << endl;
 
-	for (int i = 0 ; i <= 1000 ; i++)
+	for (int i = 0 ; i < 1000 ; i++)
 	{
 		if( res[i] == '~')
 		{
-			cout << endl;
+			if (res[i-1] == '~')
+			{
+				continue;
+			}
+			else
+			{
+				cout << endl;
+			}
 
 		} else
 		{
