@@ -59,7 +59,7 @@ To verify your output, print the array with each word in one line.
 
 ## EX 8: [Hacker Rank] simple strings 
 
-please visit Hack rank on [this link](https://www.hackerrank.com/challenges/c-tutorial-strings/problem)
+please visit Hacker rank on [this link](https://www.hackerrank.com/challenges/c-tutorial-strings/problem)
 
 ## EX 9: Polar class
 Create a class Polar that represents the points on the plain as polar coordinates (radius and angle). Create an overloaded +operator for addition of two
