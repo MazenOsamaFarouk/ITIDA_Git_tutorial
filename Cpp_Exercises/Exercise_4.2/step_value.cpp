@@ -86,16 +86,6 @@ int main(void)
     j.display();
     i.display();
 
-        j = i++; /*post increment*/
-    j.display();
-    i.display();
-
-    std::cout << std::endl;
-
-    j = ++i; /*pre increment*/
-    j.display();
-    i.display();
-
     std::cout << std::endl;
 
     i=i+5;

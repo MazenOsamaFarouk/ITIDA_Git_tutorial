@@ -94,7 +94,7 @@ int main(void)
     i=i+5;      //2+5 =7
     i.display();
 
-    j=j-5;      //2-5=7
+    j=j-5;      //2-5=-3
     j.display();
     
     return 0;
