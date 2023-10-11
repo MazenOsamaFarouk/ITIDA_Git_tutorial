@@ -6,7 +6,9 @@ class Cartesian
 private:
 int x_Direction;
 int y_Direction;
-Cartesian(): x_Direction(0) , y_Direction(0){}
+
+public:
+Cartesian(int x , int y): x_Direction(x) , y_Direction(y){}
 
 void Set_x_y(int m_x_Direction, int m_y_Direction)
 {
@@ -27,3 +29,15 @@ int main()
 
     return 0;
 }
+
+cCartesianddCoordinates(cCartesian& rhs)
+{
+return cCartesian((m_x + rhs.m_x),(m_y + rhs .m—y))
+}
+
+return
+a
++ rhs .m_x), (m_y + rhs .m—y) ) ;
+operator rhs)
++ + rhs.m—y) ) ;
+cCartes
