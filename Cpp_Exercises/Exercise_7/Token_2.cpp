@@ -7,16 +7,18 @@
 int main()
 {
     char str[500];
+
     char words[MAX_WORDS][MAX_WORD_LENGTH];
     int wordCount = 0;
+    int wordLength = 0;
 
     std::cout << "Enter a string: ";
     std::cin.getline(str, sizeof(str));
+    std::cout<<std::endl;
 
-    int wordLength = 0;
     for (int i = 0; i <= strlen(str); i++)
     {
-        if (str[i] == ' ' || str[i] == '.' || str[i] == ',' || str[i] == '?' || str[i] == '!' || str[i] == ':' || str[i] == ';' || str[i] == '\0')
+        if (!isalnum(str[i]))
         {
             if (wordLength != 0)
             {
