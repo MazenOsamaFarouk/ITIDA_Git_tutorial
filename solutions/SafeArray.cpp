@@ -9,7 +9,7 @@ private:
 int arr[LIM];
 
 public:
-int& operator [](int n)  //note: return by reference
+int& operator [](int n) 
 {
 if( n< 0 || n>=LIM )
 { cout << "\nIndex out of bounds";  }
