@@ -1,18 +1,17 @@
 #include <iostream>
 #include <stdexcept>
-#define ARRAY_SIZE 10
 using namespace std;
-template<class T>
+template<class T,int size>
 class SafeArray
 {
 private:
-    T data[ARRAY_SIZE];
+    T data[size];
 
 public:
 
     SafeArray()
     {
-        for (T i = 0; i < ARRAY_SIZE; i++)
+        for (T i = 0; i < size; i++)
         {
             data[i] = 0;
         }
@@ -21,7 +20,7 @@ public:
 
     T& operator[](T index)
     {
-        if(!((index >=0)&&(index <ARRAY_SIZE)))
+        if(!((index >=0)&&(index <size)))
         {
              cout<<"Out of range"<<endl;
              int x=0xff;
@@ -32,7 +31,7 @@ public:
 };
 int main()
 {
-    SafeArray<int> arr1;
+    SafeArray<int,size> arr1;
     arr1[5]=10;
     cout<<arr1[5]<<endl;
     return 0;
