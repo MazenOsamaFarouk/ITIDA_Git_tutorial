@@ -16,13 +16,13 @@ public:
         /*do nothing*/
     }
 
-    CCounter &increment()
+    CCounter& increment()
     {
         counter_++;
         return (*this);
     }
 
-    CCounter &decrement()
+    CCounter& decrement()
     {
         counter_--;
         return (*this);
@@ -63,6 +63,7 @@ public:
     {
         return CCounter(counter_ - number);
     }
+
     void display()
     {
         std::cout << counter_ << std::endl;
@@ -73,14 +74,14 @@ int main(void)
 {
     CCounter i, j;
 
-    i++;
-    j++;
-    --i;
-    --j;
+    i++;        //1
+    --i;        //0
+    j++;        //1
+    --j;        //0
 
-    j = i++; /*post increment*/
-    j.display();
-    i.display();
+    j = i++; /*post increment*/   //j=0  , i=1
+    j.display();            //0
+    i.display();            //1
 
     std::cout << std::endl;
 

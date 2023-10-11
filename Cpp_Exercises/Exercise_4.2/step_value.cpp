@@ -11,7 +11,12 @@ public:
         /*do nothing*/
     }
 
-    CCounter &increment() 
+    CCounter(int value) : counter_(value)
+    {
+        /*do nothing*/
+    }
+
+    CCounter &increment()
     {
         counter_++;
         return (*this);
@@ -49,6 +54,16 @@ public:
         return (*this);
     }
 
+    CCounter operator+(int number)
+    {
+        return CCounter(counter_ + number);
+    }
+
+    CCounter operator-(int number)
+    {
+        return CCounter(counter_ - number);
+    }
+
     void display()
     {
         std::cout << counter_ << std::endl;
@@ -57,19 +72,37 @@ public:
 
 int main(void)
 {
-    CCounter i,j;
+    CCounter i, j;
     i++;
     j++;
     --i;
     --j;
 
-    j=i++;          /*post increment*/
-    j.display(); 
-    i.display();  
-    std::cout<<std::endl;
-    j=++i;         /*pre increment*/
+    j = i++; /*post increment*/
     j.display();
     i.display();
+    std::cout << std::endl;
+    j = ++i; /*pre increment*/
+    j.display();
+    i.display();
+
+        j = i++; /*post increment*/
+    j.display();
+    i.display();
+
+    std::cout << std::endl;
+
+    j = ++i; /*pre increment*/
+    j.display();
+    i.display();
+
+    std::cout << std::endl;
+
+    i=i+5;
+    i.display();
+
+    j=j-5;
+    j.display();
 
     return 0;
 }
