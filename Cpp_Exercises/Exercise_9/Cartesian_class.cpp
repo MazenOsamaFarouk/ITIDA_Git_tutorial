@@ -32,4 +32,10 @@ public:
     {
         y = number;
     }
+
+    void set_X_Y(double _x,double _y)
+    {
+        x=_x;
+        y=_y;
+    }
 };
