@@ -27,7 +27,7 @@ int main()
 			}
 	}
 
-	 cout << "\nres : \n" << res << endl;
+	 //cout << "\nres : \n" << res << endl;
 
 	for (int i = 0 ; i < 1000 ; i++)
 	{
