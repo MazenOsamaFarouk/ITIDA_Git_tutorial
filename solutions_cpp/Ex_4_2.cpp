@@ -6,24 +6,28 @@ class cCounter
 {
     private:
     int m_count;
-    int step;
+    int m_step;
 
     public:
-    cCounter(void):m_count(0),step(1)
+    cCounter(void):m_count(0),m_step(1)
     {
 
     }
-    cCounter(int x):m_count(0),step(x)
+    cCounter(int StartValue,int step=1):m_count(StartValue),m_step(step)
     {
 
     }
-    void operator++(void)//increment (prefix)
+    cCounter operator++(void)//increment (prefix)
     {
-        m_count+=step;
+        m_count+=m_step;
+        // cCounter temp_counter(m_count);
+        // return temp_counter;
+        return cCounter(m_count);
     }
-    void operator--(void)
+    cCounter operator--(void)
     {
-        m_count-=step;
+        m_count-=m_step;
+        return cCounter(m_count);
     }
 
     void Display(void)
@@ -31,22 +35,14 @@ class cCounter
         cout<< "value = " <<m_count<<endl;
     }
 };
-
 int main(void)
 {
-    // func(10); func('C');
-	int n;
-	cin>>n;
-    cCounter c1(n);
+    cCounter c1(0,1);
     cCounter c2;
-    c1.Display();
     ++c1;
     ++c1;
-    ++c2;
-    ++c2;
-    ++c2;
-    --c2;
+    c2=--c1;
     c2.Display();
-    c1.Display();
+
     return 0;
 }
