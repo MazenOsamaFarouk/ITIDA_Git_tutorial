@@ -1,26 +1,41 @@
 #include <iostream>
-#include <string>
+#include <cstring>
 
+#define MAX_WORDS 100
+#define MAX_WORD_LENGTH 50
 
 int main()
 {
-    std::string str;
-    std::cout << "Enter a string: ";
-    std::getline(std::cin, str);
+    char str[500];
+    char words[MAX_WORDS][MAX_WORD_LENGTH];
+    int wordCount = 0;
 
-    std::string unwanted_chars = ".,?!:; ";
-    for (int i = 0; i < str.length(); i++)
+    std::cout << "Enter a string: ";
+    std::cin.getline(str, sizeof(str));
+
+    int wordLength = 0;
+    for (int i = 0; i <= strlen(str); i++)
     {
-        for (int j = 0; j < unwanted_chars.length(); j++)
+        if (str[i] == ' ' || str[i] == '.' || str[i] == ',' || str[i] == '?' || str[i] == '!' || str[i] == ':' || str[i] == ';' || str[i] == '\0')
         {
-            if (str[i] == unwanted_chars[j])
+            if (wordLength != 0)
             {
-                str[i] = ' ';
-                break;
+                words[wordCount][wordLength] = '\0';
+                wordCount++;
+                wordLength = 0;
             }
         }
+        else
+        {
+            words[wordCount][wordLength] = str[i];
+            wordLength++;
+        }
     }
-    std::cout << str << std::endl;
+
+    for (int i = 0; i < wordCount; i++)
+    {
+        std::cout << words[i] << std::endl;
+    }
 
     return 0;
 }
