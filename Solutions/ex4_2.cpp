@@ -4,40 +4,47 @@ using namespace std;
 
 class cCounter
 {
-	int m_counts;
-	signed int step;
-public:
-	cCounter():
-	m_counts(0)
-	,step(1)
-	{/* nothing to do */}
+    private:
+    int m_counts;
+    int m_step;
 
+    public:
+    cCounter(void):m_counts(0),m_step(1)
+    {
+
+    }
+    cCounter(int StartValue,int step=1):m_counts(StartValue),m_step(step)
+    {
+
+    }
 	cCounter& increment()
 	{
-		m_counts += step;
+		m_counts += m_step;
 		return (*this);
 	}
 
 	cCounter& decrement()
 	{
-		m_counts -= step;
+		m_counts -= m_step;
 		return (*this);
 	}
 
 	cCounter& setStep(int _a)
 	{
-		step = _a;
+		m_step = _a;
 		return (*this);
 	}
 
-	void operator ++() //increment (prefix)
+	cCounter operator ++() //increment (prefix)
 	{
-		m_counts += step;
+		m_counts += m_step;
+		return cCounter(m_counts);
 	}
 
-	void operator --() //increment (prefix)
+	cCounter operator --() //increment (prefix)
 	{
-		m_counts -= step;
+		m_counts -= m_step;
+		return cCounter(m_counts);
 	}
 
 	void display()
@@ -52,12 +59,12 @@ public:
 
 int main(void)
 {
-	cCounter c;
-	
-	c.setStep(5);
-	++c;
-	++c;
-	c.display();
+	cCounter c1(0,1);
+    cCounter c2;
+    ++c1;
+    ++c1;
+    c2=--c1;
+    c2.display();
 
 
 	return 0;
