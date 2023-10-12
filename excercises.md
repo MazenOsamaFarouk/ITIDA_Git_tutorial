@@ -82,4 +82,10 @@ overload the `[]` operator
 ### EX 11.1: 
 Make this class into a template, so the safe array can store any kind of data, with any size. In `main()`, create safe arrays of at least two different types, and store some data in them.
 
+## EX 12: Student Simple Database
+Create a class `Student` that can hold data as `name:string` and `class:string` and grades for different subjects `math`, `english`, `science`.
+The class should be able to save the student data into a file in csv format and be able to read it again and modify it.
+Create an interactive program in the `main.cpp` file to use this class.
+You should cover all CRUD operations on the file.
+
 

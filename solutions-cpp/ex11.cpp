@@ -2,11 +2,14 @@
 
 #define ARR_MAX  100
 
-class cSafeArray_int
+
+
+template <class T, int size>
+class cSafeArray
 {
 
 public:
-    int& access(unsigned int index)
+    T& access(unsigned int index)
     {
         if(index < ARR_MAX)
         {
@@ -20,7 +23,7 @@ public:
             return ret;
         }
     }
-    int& operator [](unsigned int index)
+    T& operator [](unsigned int index)
     {
         if(index < ARR_MAX)
         {
@@ -42,8 +45,8 @@ public:
 
 
 private:
-    int ret ;
-    int m_arr[ARR_MAX];
+    T ret ;
+    T m_arr[size];
     bool error;
 
 
@@ -53,18 +56,31 @@ private:
 
 int main(void)
 {
-    cSafeArray_int arr1;
+    cSafeArray<int,10> arr1;
 
-    for(int i=0; i<ARR_MAX; i++)
+    for(int i=0; i<10; i++)
     {
         // arr1.access(i) = (i+2) ;
         arr1[i] = (i+3) ;
         
     }
 
-    for(int i=0; i<ARR_MAX; i++)
+    for(int i=0; i<10; i++)
     {
         std::cout << arr1[i] << " " ;
+    }
+
+    cSafeArray<std::string,5> arr2;
+
+    arr2[0] = "Hello";
+    arr2[1] = "I am";
+    arr2[2] = "MAzen";
+    arr2[3] = "Osama";
+    arr2[4] = "Farouk";
+
+    for(int i=0; i<10; i++)
+    {
+        std::cout << arr2[i] << " " ;
     }
 
     
