@@ -1,8 +1,8 @@
 /*This is the standard Input/output library for C++ just like stdio.h in C*/
 #include <iostream>
 
-/*syntax of Declaring  a template to use any type as long as the user provide in place of T
-it needs to right before declaring a class / method / function that is gonna be used in*/
+/*syntax of Declaring  a template to use any type as long as the user provide type in place of T
+it needs to written before declaring a class / method / function that is gonna be used in*/
 template <typename T>
 
 /*syntax to declare a class its good practice to put c before your class name,
