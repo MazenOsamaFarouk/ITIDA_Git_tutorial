@@ -257,7 +257,7 @@ public: /*public: everything that comes after it is public it can be used anywhe
     }
 
     /*Destructor is fun and easy one it always gets called right before } ending the scope the object was created in.
-    so just right before the object get delete from the memory the destructor gets called and its clean time :D*/
+    so just right before the object get deleted from the memory the destructor gets called and its cleaning time :D*/
     ~cClass()
     {
         m_count--; /*Decrease the count when an object is destroyed no longer living object its dead :(*/
