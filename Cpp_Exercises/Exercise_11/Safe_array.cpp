@@ -2,10 +2,11 @@
 
 #define SIZE 10
 
-class cSafeArray_int
+template <class T>
+class cSafeArray
 {
 private:
-    int m_arr[SIZE];
+    T m_arr[SIZE];
 
 public:
     cSafeArray_int()
@@ -29,7 +30,7 @@ public:
 
 int main()
 {
-    cSafeArray_int arr;
+    cSafeArray<int> arr;
 
     for (int i = 0; i < SIZE; i++)
     {
@@ -38,14 +39,14 @@ int main()
 
     for (int i = 0; i < SIZE; i++)
     {
-        std::cout << arr[i] << " ";
+        std::cout << arr[i] << std::endl;
     }
 
     std::cout << std::endl;
 
     for (int i = 0; i < 12; i++)
     {
-        std::cout << arr[i] << " ";
+        std::cout << arr[i] << std::endl;
     }
 
     return 0;

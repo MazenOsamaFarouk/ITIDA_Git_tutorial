@@ -13,7 +13,7 @@ public:
         /*do nothing*/
     }
 
-    double getX() const
+    double get_X() const
     {
         return m_x;
     }
