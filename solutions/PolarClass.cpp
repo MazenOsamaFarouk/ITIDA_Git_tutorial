@@ -32,12 +32,5 @@ int main()
 
 cCartesianddCoordinates(cCartesian& rhs)
 {
-return cCartesian((m_x + rhs.m_x),(m_y + rhs .m—y))
+return cCartesian((m_x + rhs.m_x),(m_y + rhs .m—y));
 }
-
-return
-a
-+ rhs .m_x), (m_y + rhs .m—y) ) ;
-operator rhs)
-+ + rhs.m—y) ) ;
-cCartes

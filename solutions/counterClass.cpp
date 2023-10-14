@@ -7,10 +7,10 @@ private:
 int count;
 
 public:
-counter() : count(0)
-{count++;}
+//counter() : count(0)
+//{count++;}
 
-counter(int step)
+counter( int step = 1 )
 {
     count += step;
 }
@@ -29,12 +29,13 @@ void display()
     cout<<count;
 }
 
-void operator ++()
+counter operator ++()
 {
     count ++;
+    return counter()
 }
 
-void operator --()
+counter operator --()
 {
     count --;
 }
