@@ -52,7 +52,8 @@ void convert(FILE *input, FILE *output)
     }
     int strLength = hexLength / 2;
     char final_str[strLength];
-    for (i = 0; i < strLength; i++) {
+    for (i = 0; i < strLength; i++)
+	{
         char byte[3];
         byte[0] = hexString[i * 2];
         byte[1] = hexString[i * 2 + 1];
