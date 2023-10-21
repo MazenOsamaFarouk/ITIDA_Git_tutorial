@@ -15,7 +15,7 @@ void check_errors(short int iflag, short int oflag, short int operation_count);
 int main(int argc, char *argv[])
 {
     /*variables to parse my arguments and to hold what operation should be done*/
-    int arguments = 0, operation_count = 0;
+    int arguments = 0, operation_flag = 0;
 
     /*bunch of flags*/
     short int iflag = 0, oflag = 0, xflag = 0, dflag = 0;
@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
             xflag = 1;
             break;
         case 'd':
-            dflag = 1;
+            dflag = 2;
             break;
         default:
             fprintf(stderr, "Error no valid arguments passed \n");
@@ -62,8 +62,8 @@ int main(int argc, char *argv[])
     }
 
     /*error check*/
-    operation_count=xflag+dflag;
-    check_errors(iflag,oflag,operation_count);
+    operation_flag = xflag + dflag;
+    check_errors(iflag, oflag, operation_flag);
 
     /****************************************user input handling****************************************/
     /*There is two modes to work in here if user provided input file or input string user must provide one
@@ -71,28 +71,17 @@ int main(int argc, char *argv[])
     if the user only provided input_file and no output_file the program will create an output file
     if the user provided input_string and no output_file will just print to stdout
     if the user provided input_string and output_file will convert and store in the output_file provided*/
-    if (xflag)
+    if (input_file)
     {
-        if (input_file)
-        {
-            parse_input_file(input_file, output_file, XFLAG);
-        }
-        else
-        {
-            parse_input_string(output_file, input_string, XFLAG);
-        }
+        parse_input_file(input_file, output_file, operation_flag);
     }
-    else if (dflag)
+    else
     {
-        if (input_file)
-        {
-            parse_input_file(input_file, output_file, DFLAG);
-        }
-        else
-        {
-            parse_input_string(output_file, input_string, DFLAG);
-        }
+        parse_input_string(output_file, input_string, operation_flag);
     }
+
+    if (input_file)  fclose(input_file);
+    if (output_file) fclose(output_file);
     return 0;
 }
 
@@ -126,8 +115,6 @@ void parse_input_file(FILE *input_file, FILE *output_file, int flag)
             fprintf(output_file, "%.2X ", c);
         }
     }
-    fclose(input_file);
-    fclose(output_file);
 }
 
 void parse_input_string(FILE *output_file, char input_string[], int flag)
@@ -159,25 +146,30 @@ void parse_input_string(FILE *output_file, char input_string[], int flag)
         }
         i++;
     }
-    if(output_file) fclose(output_file);
 }
 
-void check_errors(short int iflag, short int oflag, short int operation_count)
+void check_errors(short int iflag, short int oflag, short int operation_flag)
 {
-     /********************************************Error handling********************************************/
-    if (operation_count > 1 || operation_count == 0) /*if more than one operations is provided or none > error*/
+    if (operation_flag > 2 || operation_flag == 0) /*if more than one operations is provided or none > error*/
     {
-        fprintf(stderr, "\nCan only do one operation at a time your operation count = %d. -h for help\n\n", operation_count);
+        if (operation_flag)
+        {
+            fprintf(stderr, "\nCan only do one operation at a time you selected both operations can't be done at once, -h for help.\n\n");
+        }
+        else
+        {
+            fprintf(stderr, "\nYou didn't select any operations, -h for help.\n\n");
+        }
         exit(1);
     }
     else if (iflag != 1) /*if no input is provided or more than one input > error*/
     {
-        fprintf(stderr, "\nYou must provide and input and just one \n\n");
+        fprintf(stderr, "\nYou must provide one input and only one -h for help\n\n");
         exit(1);
     }
     else if (oflag > 1) /*if more than one output is given >> error*/
     {
-        fprintf(stderr, "\nYou can only provide one output file or none.\n\n");
+        fprintf(stderr, "\nYou can only provide one output file or none. -h for help\n\n");
         exit(1);
     }
-}
+} /*175 lines xD*/
