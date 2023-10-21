@@ -89,8 +89,8 @@ void PrintHelp(void)
 {
     printf("\n**************************Help**************************\n\n");
 
-    printf("\n-i [input file] you must provide input file to be converted or input string argument.\n");
-    printf("\n-o [output file] you can provide a file or not.\n");
+    printf("\n-i [input_file] you must provide an input file to be converted or an input string argument.\n");
+    printf("\n-o [output_file] you can provide a file or not if u provide one it will be overwritten.\n");
 
     printf("\n-x to convert from ascii to hex.\n");
     printf("\n-d to convert from ascii to decimal.\n\n");
@@ -158,7 +158,7 @@ void check_errors(short int iflag, short int oflag, short int operation_flag)
         }
         else
         {
-            fprintf(stderr, "\nYou didn't select any operations, -h for help.\n\n");
+            fprintf(stderr, "\nYou didn't select any operation, -h for help.\n\n");
         }
         exit(1);
     }
