@@ -49,10 +49,10 @@ int main(int argc, char *argv[])
             oflag++;
             break;
         case 'x':
-            xflag = 1;
+            xflag = XFLAG;
             break;
         case 'd':
-            dflag = 2;
+            dflag = DFLAG;
             break;
         default:
             fprintf(stderr, "Error no valid arguments passed \n");
