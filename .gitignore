@@ -1,28 +1,7 @@
-# Executables
-*.exe
-*.out
+# ignore all except .c and .cpp files
 
-# Archive files
-*.tar.gz
-*.tar
-*.gz
-*.zip
-*.pkl
-
-# Data files
-*.csv
-*.json
-
-# Binary files
-*.doc
-*.docx
-*.jpeg
-*.jpg
-*.ods
-*.pdf
-*.png
-*.ppt
-*.pptx
-*.tiff
-*.xls
-*.xlsx
+*
+!*.c
+!*.cpp
+!*.gitignore
+!Makefile
