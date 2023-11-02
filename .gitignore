@@ -1,7 +1,11 @@
-# ignore all except .c and .cpp files
-
+#ignore all files even in sub directories
 *
+
+#except .c and .cpp files and .gitignore make files etc
 !*.c
 !*.cpp
 !*.gitignore
 !Makefile
+
+# ...even if they are in subdirectories
+!*/
