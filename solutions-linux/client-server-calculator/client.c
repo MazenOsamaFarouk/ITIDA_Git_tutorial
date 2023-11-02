@@ -37,7 +37,7 @@ int main(void)
     }
 
     // send request to server
-    char *msg = "-30+70+20*5+20-10*35*5/4+50-20+3";
+    char *msg = "30+70+20*5+20-10*35*5/4+50-20+3";
     strncpy(buffer, msg, strlen(msg));
     ret = write(client_sock, buffer, strlen(buffer));
     if (ret < 0)
@@ -54,7 +54,7 @@ int main(void)
         perror("read");
         exit(EXIT_FAILURE);
     }
-    printf("Server Response:\n%s\n.", buffer);
+    printf("Server Response: [%s]\n", buffer);
 
     close(client_sock);
 }

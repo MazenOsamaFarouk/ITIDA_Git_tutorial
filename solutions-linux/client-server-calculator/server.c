@@ -165,7 +165,6 @@ void Calculator(char *buffer)
         operations_count++;
     }
 
-    numbers_count = 0;
     operations_count = 0;
 
     while (operation[operations_count] != '\0')
@@ -192,12 +191,13 @@ void Calculator(char *buffer)
         }
         operations_count++;
     }
-    sprintf(buffer, "Result = %.2f.", numbers[0]);
+
+    sprintf(buffer, "Result = %.2f", numbers[0]);
 }
 
 void ShiftNumbersLeft(float numbers[], int start)
 {
-    while (numbers[start] != '\0')
+    while (numbers[start+1] != '\0')
     {
         numbers[start] = numbers[start + 1];
         start++;
@@ -208,10 +208,7 @@ void ShiftOperationsLeft(char operations[], int start)
 {
     while (operations[start] != '\0')
     {
-        while (operations[start] != '\0')
-        {
-            operations[start] = operations[start + 1];
-            start++;
-        }
+        operations[start] = operations[start + 1];
+        start++;
     }
 }
