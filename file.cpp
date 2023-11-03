@@ -16,13 +16,14 @@ class CsvReader
             out>>input;
             out>>" ";
         }
-        void read(T item)
+        void read(T *item)
         {
             while(! fin.eof())
             {
                 fin>>*ptr;
             }
         }
+
 };
 class Student
 {
@@ -38,10 +39,11 @@ class Student
             csvReader.write(age);
             csvReader.write(class_of_student);
         }
-        void read_student_data()
-        {
-            cout<<age<<" "<<class_of_student<<endl;
-        }    
+    void read_student_data()
+    {
+        csvReader.read(&age);
+        csvReader.read(&class_of_student);
+    }   
 }
 int main()
 {
