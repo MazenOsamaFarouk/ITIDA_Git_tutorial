@@ -16,7 +16,7 @@ class CsvReader
             out>>input;
             out>>" ";
         }
-        void read(T *ptr)
+        void read(T item)
         {
             while(! fin.eof())
             {
