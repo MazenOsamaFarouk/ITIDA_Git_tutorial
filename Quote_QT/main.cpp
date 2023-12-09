@@ -5,187 +5,167 @@
 #include <vector>
 #include <QFile>
 #include "qtextensions.h"
-/************************Define counters**************************/
-qint32 count_happy = 0;
-qint32 count_sad = 0;
-qint32 count_angry = 0;
-qint32 count_calm = 0;
-qint32 count_excited = 0;
-qint32 count_bored = 0;
 
-/************************Define enum**************************/
-enum emotion
+enum Emotion 
 {
-    happy,
-    sad,
-    angry,
-    calm,
-    excited,
-    bored,
-    wrong
+    Happy,
+    Sad,
+    Angry,
+    Calm,
+    Excited,
+    Bored,
+    Wrong
 };
 
-/************************Define stdin & stdout**************************/
-QTextStream qin(stdin);
-QTextStream qout(stdout);
-
-/************************Define map**************************/
-std::map<emotion, std::vector<QString>> m;
-
-/************************Define prototype of function**************************/
-void Init_vector(std::vector<QString> &v, QString file_path);
-void Display_vector(std::vector<QString> &v);
-emotion Get_opposite_emotion(QString str);
-void Quote_function(emotion emo, qint32 &counter);
-
-int main(int argc, char *argv[])
+class QuoteManager 
 {
-    QCoreApplication a(argc, argv);
+private:
+    void initVector(std::vector<QString> &v, const QString &filePath);
+    void displayVector(const std::vector<QString> &v);
+    Emotion getOppositeEmotion(const QString &str);
+    void quoteFunction(Emotion emo, qint32 &counter);
 
-    /************************Define all files**************************/
-    QString happy_file = "/home/mohanad/QT_Quote/happy.txt";
-    QString sad_file = "/home/mohanad/QT_Quote/sad.txt";
-    QString angry_file = "/home/mohanad/QT_Quote/angry.txt";
-    QString calm_file = "/home/mohanad/QT_Quote/calm.txt";
-    QString excited_file = "/home/mohanad/QT_Quote/excited.txt";
-    QString bored_file = "/home/mohanad/QT_Quote/bored.txt";
+    std::map<Emotion, std::vector<QString>> m;
+    qint32 countHappy, countSad, countAngry, countCalm, countExcited, countBored;
+    QTextStream &qin;
+    QTextStream &qout;
+public:
+    QuoteManager(QTextStream &input, QTextStream &output);
+    void handleProject();
+};
 
-    /************************Define all vectors**************************/
-    std::vector<QString> happy_vector;
-    std::vector<QString> sad_vector;
-    std::vector<QString> angry_vector;
-    std::vector<QString> calm_vector;
-    std::vector<QString> excited_vector;
-    std::vector<QString> bored_vector;
+QuoteManager::QuoteManager(QTextStream &input, QTextStream &output):countHappy(0), countSad(0), countAngry(0), countCalm(0), countExcited(0), countBored(0),qin(input), qout(output) 
+{
+    // Define file paths
+    QString happyFile = "/home/mohanad/QT_Quote/happy.txt";
+    QString sadFile = "/home/mohanad/QT_Quote/sad.txt";
+    QString angryFile = "/home/mohanad/QT_Quote/angry.txt";
+    QString calmFile = "/home/mohanad/QT_Quote/calm.txt";
+    QString excitedFile = "/home/mohanad/QT_Quote/excited.txt";
+    QString boredFile = "/home/mohanad/QT_Quote/bored.txt";
 
-    /************************Init all vectors**************************/
-    Init_vector(happy_vector, happy_file);
-    Init_vector(sad_vector, sad_file);
-    Init_vector(angry_vector, angry_file);
-    Init_vector(calm_vector, calm_file);
-    Init_vector(excited_vector, excited_file);
-    Init_vector(bored_vector, bored_file);
-
-    /************************Init map**************************/
-    m.insert({emotion::happy, happy_vector});
-    m.insert({emotion::sad, sad_vector});
-    m.insert({emotion::angry, angry_vector});
-    m.insert({emotion::calm, calm_vector});
-    m.insert({emotion::excited, excited_vector});
-    m.insert({emotion::bored, bored_vector});
-
-    /************************handle project**************************/
-    while (true)
-    {
-        qout << "enter emotion [happy,sad,angry,calm,excited,bored]" << Qt::endl;
-        QString user_emotion = qin.readLine();
-        system("clear");
-        emotion real_emotion = Get_opposite_emotion(user_emotion);
-        switch (real_emotion)
-        {
-        case emotion::happy:
-        {
-            Quote_function(emotion::happy, count_happy);
-            break;
-        }
-        case emotion::sad:
-        {
-            Quote_function(emotion::sad, count_sad);
-            break;
-        }
-        case emotion::angry:
-        {
-            Quote_function(emotion::angry, count_angry);
-            break;
-        }
-        case emotion::calm:
-        {
-            Quote_function(emotion::calm, count_calm);
-            break;
-        }
-        case emotion::excited:
-        {
-            Quote_function(emotion::excited, count_excited);
-            break;
-        }
-        case emotion::bored:
-        {
-            Quote_function(emotion::bored, count_bored);
-            break;
-        }
-        case emotion::wrong:
-        {
-            qout << "wrong emotion try again" << Qt::endl;
-        }
-        }
-    }
-
-    return a.exec();
+    // Init all vectors
+    initVector(m[Emotion::Happy], happyFile);
+    initVector(m[Emotion::Sad], sadFile);
+    initVector(m[Emotion::Angry], angryFile);
+    initVector(m[Emotion::Calm], calmFile);
+    initVector(m[Emotion::Excited], excitedFile);
+    initVector(m[Emotion::Bored], boredFile);
 }
 
-void Init_vector(std::vector<QString> &v, QString file_path)
+void QuoteManager::initVector(std::vector<QString> &v, const QString &filePath) 
 {
-    QFile file(file_path);
+    QFile file(filePath);
     file.open(QFile::ReadOnly);
-    QTextStream s(&file);
-    while (!s.atEnd())
+    QTextStream stream(&file);
+    while (!stream.atEnd()) 
     {
-        QString temp = s.readLine();
+        QString temp = stream.readLine();
         v.push_back(temp);
     }
     file.close();
 }
 
-void Display_vector(std::vector<QString> &v)
+void QuoteManager::displayVector(const std::vector<QString> &v) 
 {
-    for (qint32 i = 0; i < v.size(); i++)
+    for (qint32 i = 0; i < v.size(); i++) 
     {
         qout << v[i] << Qt::endl;
     }
 }
 
-emotion Get_opposite_emotion(QString str)
+Emotion QuoteManager::getOppositeEmotion(const QString &str) 
 {
-    if (str == "happy")
+    if (str == "happy") 
     {
-        return emotion::sad;
-    }
-    else if (str == "sad")
+        return Emotion::Sad;
+    } 
+    else if (str == "sad") 
     {
-        return emotion::happy;
-    }
-    else if (str == "angry")
+        return Emotion::Happy;
+    } 
+    else if (str == "angry") 
     {
-        return emotion::calm;
-    }
-    else if (str == "calm")
+        return Emotion::Calm;
+    } 
+    else if (str == "calm") 
     {
-        return emotion::angry;
-    }
-    else if (str == "excited")
+        return Emotion::Angry;
+    } 
+    else if (str == "excited") 
     {
-        return emotion::bored;
-    }
-    else if (str == "bored")
+        return Emotion::Bored;
+    } 
+    else if (str == "bored") 
     {
-        return emotion::excited;
-    }
-    else
+        return Emotion::Excited;
+    } 
+    else 
     {
-        return emotion::wrong;
+        return Emotion::Wrong;
     }
 }
 
-void Quote_function(emotion emo, qint32 &counter)
+void QuoteManager::quoteFunction(Emotion emo, qint32 &counter) 
 {
     auto vec = m[emo];
     qout << vec[counter] << Qt::endl;
-    if (counter == 6)
+    if (counter == 6) 
     {
         counter = 0;
-    }
-    else
+    } 
+    else 
     {
         counter++;
     }
+}
+
+void QuoteManager::handleProject() 
+{
+    while (true) 
+    {
+        qout << "Enter emotion [happy, sad, angry, calm, excited, bored]" << Qt::endl;
+        QString userEmotion = qin.readLine();
+        system("clear");
+        Emotion realEmotion = getOppositeEmotion(userEmotion);
+        switch (realEmotion) {
+            case Emotion::Happy:
+                quoteFunction(Emotion::Happy, countHappy);
+                break;
+            case Emotion::Sad:
+                quoteFunction(Emotion::Sad, countSad);
+                break;
+            case Emotion::Angry:
+                quoteFunction(Emotion::Angry, countAngry);
+                break;
+            case Emotion::Calm:
+                quoteFunction(Emotion::Calm, countCalm);
+                break;
+            case Emotion::Excited:
+                quoteFunction(Emotion::Excited, countExcited);
+                break;
+            case Emotion::Bored:
+                quoteFunction(Emotion::Bored, countBored);
+                break;
+            case Emotion::Wrong:
+                qout << "Wrong emotion. Try again" << Qt::endl;
+                break;
+        }
+    }
+}
+
+int main(int argc, char *argv[]) {
+    QCoreApplication a(argc, argv);
+
+    // Create QTextStream instances for input and output
+    QTextStream qin(stdin);
+    QTextStream qout(stdout);
+
+    // Create an object of QuoteManager
+    QuoteManager quoteManager(qin, qout);
+
+    // Handle the project using QuoteManager
+    quoteManager.handleProject();
+
+    return a.exec();
 }
